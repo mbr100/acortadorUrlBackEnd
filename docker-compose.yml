@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+    app:
+        build: .
+        ports:
+            - "8080:8080"
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/acortador_url
+            - SPRING_DATASOURCE_USERNAME=prueba
+            - SPRING_DATASOURCE_PASSWORD=prueba
+        depends_on:
+            - db
+    db:
+        image: mysql:8.0
+        restart: always
+        environment:
+            MYSQL_DATABASE: acortador_url
+            MYSQL_USER: prueba
+            MYSQL_PASSWORD: prueba
+            MYSQL_ROOT_PASSWORD: prueb
+        ports:
+            - "3306:3306"

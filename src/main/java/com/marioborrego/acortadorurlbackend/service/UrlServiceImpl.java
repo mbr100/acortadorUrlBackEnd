@@ -5,6 +5,7 @@ import com.marioborrego.acortadorurlbackend.repository.UrlRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -20,18 +21,20 @@ public class UrlServiceImpl implements UrlService{
 
     @Override
     public String generarUrlCorta(String url) {
-        logger.info("Generando URL corta para {}", url);
-        Optional<Url> existeUrl = urlRepository.findByUrl(url);
-
-        if (existeUrl.isPresent()) {
-            return existeUrl.get().getUuid();
-        } else {
-            Url nuevaUrl = new Url();
-            nuevaUrl.setUrl(url);
-            nuevaUrl.setUuid(generarUUID());
-            urlRepository.save(nuevaUrl);
-            return nuevaUrl.getUuid();
+        if (!StringUtils.hasText(url)) {
+            throw new IllegalArgumentException("La URL proporcionada no puede estar vacía");
         }
+        return urlRepository.findByUrl(url)
+                .map(Url::getUrl)
+                .orElseGet(() -> {
+                    String uuid = generarUUID();
+                    Url nuevaUrl = Url.builder()
+                            .url(url)
+                            .uuid(uuid)
+                            .build();
+                    urlRepository.save(nuevaUrl);
+                    return uuid;
+                });
     }
 
     @Override

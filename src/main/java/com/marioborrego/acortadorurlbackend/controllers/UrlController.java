@@ -35,7 +35,7 @@ public class UrlController {
     }
 
     @GetMapping("obtenerUrlOriginal/{uuid}")
-    public ResponseEntity<Map<String, String>> obtenerUrlOriginal(@PathVariable String uuid) {
+    public ResponseEntity<Map<String, String>> obtenerUrlOriginal(@PathVariable("uuid") String uuid) {
         Optional<String> originalUrl = urlService.obtenerUrlOriginal(uuid);
 
         return originalUrl.map(url -> {
@@ -49,6 +49,7 @@ public class UrlController {
 
     @PostMapping("obtenerUrlCorta")
     public ResponseEntity<Map<String, String>> obtenerUrlCorta(@RequestBody Map<String, String> request) {
+        logger.info("Petición para generar URL corta");
         String url = request.get("url");
         logger.info("Generando URL corta para {}", url);
         String shortUrl = urlService.generarUrlCorta(url);
