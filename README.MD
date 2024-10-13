@@ -68,6 +68,9 @@ larga, acortarla y recuperarla posteriormente a través de un enlace.
 - CORS: La API permite solicitudes desde http://localhost:4200, lo que es útil para la interacción con el frontend de Angular.
 - Asegúrate de reemplazar localhost:4200 con la dirección de tu servidor si lo despliegas en un entorno diferente.
 
+## Enlace al FrontEnd
+Este proyecto requiere un FrontEnd para funcionar correctamente. Puedes encontrar el FrontEnd del proyecto [aquí](https://github.com/mbr100/acortadorUrlFrontEnd).
+
 ## Contribuciones
 
 Las contribuciones son bienvenidas. Para contribuir:
